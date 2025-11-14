@@ -1,0 +1,63 @@
+version: 2
+
+sources:
+  - name: tokens
+    tables:
+      - name: erc20
+  - name: prices
+    tables:
+      - name: usd_with_native
+
+models:
+  - name: univ3_base_trades
+    description: "Base Uniswap V3 swaps on Ethereum with raw token amounts and addresses."
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - block_date
+              - tx_hash
+              - evt_index
+    columns:
+      - name: block_date
+        tests: [not_null]
+      - name: tx_hash
+        tests: [not_null]
+      - name: evt_index
+        tests: [not_null]
+
+  - name: univ3_enrichments
+    description: "Uniswap V3 swaps enriched with tx metadata and ERC20 token symbols and decimals."
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - block_date
+              - tx_hash
+              - evt_index
+    columns:
+      - name: block_date
+        tests: [not_null]
+      - name: tx_hash
+        tests: [not_null]
+      - name: evt_index
+        tests: [not_null]
+
+  - name: univ3_prices
+    description: "Uniswap V3 enriched swaps with USD pricing."
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - block_date
+              - tx_hash
+              - evt_index
+    columns:
+      - name: block_date
+        tests: [not_null]
+      - name: tx_hash
+        tests: [not_null]
+      - name: evt_index
+        tests: [not_null]
+
+
