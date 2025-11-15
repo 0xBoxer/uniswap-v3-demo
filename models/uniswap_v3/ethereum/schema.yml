@@ -1,6 +1,9 @@
 version: 2
 
 sources:
+  - name: ethereum
+    tables:
+      - name: transactions
   - name: tokens
     tables:
       - name: erc20
@@ -16,12 +19,12 @@ models:
           arguments:
             combination_of_columns:
               - block_date
-              - tx_hash
+              - block_number
               - evt_index
     columns:
       - name: block_date
         tests: [not_null]
-      - name: tx_hash
+      - name: block_number
         tests: [not_null]
       - name: evt_index
         tests: [not_null]
@@ -33,12 +36,12 @@ models:
           arguments:
             combination_of_columns:
               - block_date
-              - tx_hash
+              - block_number
               - evt_index
     columns:
       - name: block_date
         tests: [not_null]
-      - name: tx_hash
+      - name: block_number
         tests: [not_null]
       - name: evt_index
         tests: [not_null]
@@ -50,12 +53,12 @@ models:
           arguments:
             combination_of_columns:
               - block_date
-              - tx_hash
+              - block_number
               - evt_index
     columns:
       - name: block_date
         tests: [not_null]
-      - name: tx_hash
+      - name: block_number
         tests: [not_null]
       - name: evt_index
         tests: [not_null]

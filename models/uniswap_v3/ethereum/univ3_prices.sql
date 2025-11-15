@@ -2,7 +2,7 @@
   alias = 'univ3_prices'
   , materialized = 'incremental'
   , incremental_strategy = 'merge'
-  , unique_key = ['block_date', 'tx_hash', 'evt_index']
+  , unique_key = ['block_date', 'block_number', 'evt_index']
 ) }}
 
 with prices as (
@@ -18,7 +18,7 @@ with prices as (
         {% if is_incremental() %}
         and minute >= now() - interval '1' day
         {% else %}
-        and minute >= now() - interval '3' day
+        and minute >= now() - interval '30' day
         {% endif %}
 )
 , enrichments_with_prices as (
@@ -61,7 +61,7 @@ with prices as (
     {% if is_incremental() %}
     where bt.block_time >= now() - interval '1' day
     {% else %}
-    where bt.block_time >= now() - interval '3' day
+    where bt.block_time >= now() - interval '30' day
     {% endif %}
 )
 

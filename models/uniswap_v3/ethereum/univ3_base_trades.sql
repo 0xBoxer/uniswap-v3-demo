@@ -2,7 +2,7 @@
   alias = 'univ3_base_trades'
   , materialized = 'incremental'
   , incremental_strategy = 'merge'
-  , unique_key = ['block_date', 'tx_hash', 'evt_index']
+  , unique_key = ['block_date', 'block_number', 'evt_index']
 ) }}
 
 with uniswap_v3_base_trades as (
@@ -27,7 +27,7 @@ with uniswap_v3_base_trades as (
         {% if is_incremental() %}
         t.evt_block_time >= now() - interval '1' day
         {% else %}
-        t.evt_block_time >= now() - interval '3' day
+        t.evt_block_time >= now() - interval '30' day
         {% endif %}
 )
 
@@ -50,9 +50,5 @@ select
     , dexs.evt_index
 from
     uniswap_v3_base_trades dexs
-where
-    dexs.tx_hash is not null
-    and dexs.evt_index is not null
-    and cast(date_trunc('day', dexs.block_time) as date) is not null
 
 

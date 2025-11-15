@@ -2,7 +2,7 @@
   alias = 'univ3_enrichments'
   , materialized = 'incremental'
   , incremental_strategy = 'merge'
-  , unique_key = ['block_date', 'tx_hash', 'evt_index']
+  , unique_key = ['block_date', 'block_number', 'evt_index']
 ) }}
 
 with base_trades_with_tx as (
@@ -34,9 +34,9 @@ with base_trades_with_tx as (
         and bt.block_number = tx.block_number
         and bt.tx_hash = tx.hash
     {% if is_incremental() %}
-    where bt.block_date >= cast(date_trunc('day', now() - interval '1' day) as date)
+    where bt.block_date >= current_date - interval '1' day
     {% else %}
-    where bt.block_date >= cast(date_trunc('day', now() - interval '3' day) as date)
+    where bt.block_date >= current_date - interval '30' day
     {% endif %}
 )
 , tokens_metadata as (
@@ -87,9 +87,5 @@ left join tokens_metadata as erc20_bought
 left join tokens_metadata as erc20_sold
     on erc20_sold.contract_address = bt.token_sold_address
     and erc20_sold.blockchain = bt.blockchain
-where
-    bt.block_date is not null
-    and bt.tx_hash is not null
-    and bt.evt_index is not null
 
 
