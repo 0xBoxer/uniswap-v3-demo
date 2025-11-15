@@ -15,7 +15,6 @@ dbt_template:
       schema: "{{ env_var('DUNE_TEAM_NAME', 'dune') }}"
       threads: 4
       http_scheme: https
-      cert: true
       session_properties:
         transformations: true
       timezone: UTC
@@ -32,7 +31,6 @@ dbt_template:
       schema: "{{ env_var('DUNE_TEAM_NAME', 'dune') }}"
       threads: 4
       http_scheme: https
-      cert: true
       session_properties:
         transformations: true
       timezone: UTC

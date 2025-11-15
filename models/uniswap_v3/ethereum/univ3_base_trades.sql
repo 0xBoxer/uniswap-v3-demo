@@ -20,8 +20,8 @@ with uniswap_v3_base_trades as (
         , t.evt_tx_hash as tx_hash
         , t.evt_index
     from
-        uniswap_v3_ethereum.Pair_evt_Swap t
-    inner join uniswap_v3_ethereum.Factory_evt_PoolCreated f
+        {{ source('uniswap_v3_ethereum', 'Pair_evt_Swap') }} t
+    inner join {{ source('uniswap_v3_ethereum', 'Factory_evt_PoolCreated') }} f
         on f.pool = t.contract_address
     where
         {% if is_incremental() %}
