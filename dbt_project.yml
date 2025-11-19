@@ -29,7 +29,7 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "dbt_packages"
 
 models:
-  dbt_template:
+  uniswap_v3:
     # Config indicated by + and applies to all files under models/templates/
     +materialized: view       # fallback default, materialized should be overriden in model specific configs
     +view_security: invoker   # required security setting for views
