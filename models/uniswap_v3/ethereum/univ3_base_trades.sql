@@ -27,7 +27,7 @@ with uniswap_v3_base_trades as (
         {% if is_incremental() %}
         t.evt_block_time >= now() - interval '1' day
         {% else %}
-        t.evt_block_time >= now() - interval '30' day
+        t.evt_block_time >= now() - interval '35' day
         {% endif %}
 )
 
